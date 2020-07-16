@@ -1,0 +1,92 @@
+@import "nord.css";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    padding: 10vh
+}
+
+body {
+    font-size: 3em;
+}
+
+input {
+    font-size: 1em;
+    padding: 0.4em;
+    margin-left: calc(-0.4em - 2px);
+}
+
+body, input {
+    font-family: 'PT Mono', monospace;
+    background-color: var(--nord0);
+    color: var(--nord4);
+    border-radius: 50px;
+    border-color: var(--nord7);
+    box-sizing: border-box;
+}
+
+.universe-color {
+    color: var(--nord11);
+}
+
+.type-color {
+    color: var(--nord12);
+}
+
+.instance-color {
+    color: var(--nord13);
+}
+
+.id-color {
+    color: var(--nord14);
+}
+
+.value {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-right: 3vw;
+}
+
+row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    /* justify-items: space-between; */
+    /* justify-content: space-evenly; */
+    margin-left: 1vw;
+}
+
+@media (min-width: 1150px) {
+    .key {
+        text-align: right;
+        flex-basis: 25vw;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+        margin-right: 3vw;
+    }
+}
+
+@media (max-width: 1150px) {
+    .key {
+        text-align: right;
+        flex-basis: 30vw;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+        margin-right: 3vw;
+    }
+}
+
+a {
+    /* text-decoration: none; */
+    color: inherit;
+}
+
+footer {
+    padding: 10vh;
+    font-size: 0.4em;
+    padding-bottom: 5vh;
+}

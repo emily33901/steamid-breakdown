@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <title>SteamId Breakdown</title>
+
+    <script>
+        BigInt.prototype.pad_hex = function (size) {
+            var s = this.toString(16);
+            while (s.length < (size || 2)) { s = "0" + s; }
+            return s;
+        }
+
+        const default_steamid = 76561197960265728n
+
+        const steamid_universe_mask = 0xFF00000000000000n
+        const steamid_type_mask = 0x00F0000000000000n
+        const steamid_instance_mask = 0x000FFFFF00000000n
+        const steamid_id_mask = 0x00000000FFFFFFFFn
+
+        const steamid_universe_shift = 56n
+        const steamid_type_shift = 52n
+        const steamid_instance_shift = 32n
+        const steamid_id_shift = 0n
+
+        const type_lookup = [
+            "invalid",
+            "individual",
+            "multiseat",
+            "game_server",
+            "anon_game_server",
+            "pending",
+            "content_server",
+            "clan",
+            "chat",
+            "console_user",
+            "anon_user",
+        ]
+
+        const universe_lookup = [
+            "invalid",
+            "public",
+            "beta",
+            "internal",
+            "dev",
+            "rc",
+        ]
+
+        oninput = (e) => {
+            const steamid = BigInt(document.getElementById('input').value)
+
+            const universe = (steamid & steamid_universe_mask) >> steamid_universe_shift
+            const type = (steamid & steamid_type_mask) >> steamid_type_shift
+            const instance = (steamid & steamid_instance_mask) >> steamid_instance_shift
+            const id = (steamid & steamid_id_mask) >> steamid_id_shift
+
+            document.getElementById('hex-universe').innerHTML = universe.pad_hex(1)
+            document.getElementById('hex-type').innerHTML = type.pad_hex(1)
+            document.getElementById('hex-instance').innerHTML = instance.pad_hex(5)
+            document.getElementById('hex-id').innerHTML = id.pad_hex(8)
+
+            document.getElementById('universe').innerHTML = universe
+            document.getElementById('universe-lookup').innerHTML = universe_lookup[universe]
+            document.getElementById('type').innerHTML = type
+            document.getElementById('type-lookup').innerHTML = type_lookup[type]
+            document.getElementById('instance').innerHTML = instance
+            document.getElementById('id').innerHTML = id
+        }
+    </script>
+</head>
+
+<body onload="oninput()">
+    <h1>Steam ID breakdown</h1>
+
+    <row>
+        <p class="key">steamid:</p><input type="text" id="input" oninput="oninput()" value="76561197960265728">
+    </row>
+    <row>
+        <p class="key">0x</p>
+        <p><span class="universe-color" id="hex-universe"></span><span class="type-color" id="hex-type"></span><span
+                class="instance-color" id="hex-instance"></span><span class="id-color" id="hex-id"></span>
+        </p>
+    </row>
+    <row class="universe-color">
+        <p class="key">universe:</p>
+        <p class="value"><span id="universe"></span> (<span id="universe-lookup"></span>)</p>
+    </row>
+    <row class="type-color">
+        <p class="key">type:</p>
+        <p class="value"><span id="type"></span> (<span id="type-lookup"></span>)</p>
+    </row>
+    <row class="instance-color">
+        <p class="key">instance:</p>
+        <p class="value"><span id="instance"></span></p>
+    </row>
+    <row class="id-color">
+        <p class="key">id:</p>
+        <p class="value"><span id="id"></span></p>
+    </row>
+
+    <footer>
+        Made with &hearts; by <a href="https://f1ssi0n.com">Emily</a>
+    </footer>
+</body>
+
+</html>
